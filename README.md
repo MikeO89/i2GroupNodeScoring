@@ -39,4 +39,4 @@ Your submission will be evaluated based on the following criteria:
 * You are free to use any libraries or tools you prefer to complete the tasks.
 * Feel free to reach out to us if you have any questions or need clarification during the interview process.
 
-We look forward to reviewing your submission and assessing your skills in Python development. Good luck with your interview, and we appreciate your interest in joining our team!
+We look forward to reviewing your submission and assessing your skills in C++ development. Good luck with your interview, and we appreciate your interest in joining our team!
