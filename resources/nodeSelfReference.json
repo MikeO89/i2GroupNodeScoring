@@ -1,0 +1,14 @@
+{
+  "links": [
+    {
+      "source": 0,
+      "target": 0,
+      "value": 1
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Node1"
+    }
+  ]
+}
