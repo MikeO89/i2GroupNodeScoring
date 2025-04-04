@@ -21,7 +21,7 @@ endif()
 
 set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
 set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-set(DOC_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/html)
+set(DOC_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/docs)
 
 configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
 
@@ -156,4 +156,4 @@ endif()
 #install(CODE "execute_process(COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT})")
 
 # Install the generated documentation
-install(DIRECTORY ${DOC_OUTPUT_DIR} DESTINATION docs)
+install(DIRECTORY ${DOC_OUTPUT_DIR} DESTINATION .)
