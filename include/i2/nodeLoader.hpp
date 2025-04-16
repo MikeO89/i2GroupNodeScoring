@@ -24,7 +24,7 @@ namespace I2
 		 * @param[in] nodesCanLinkToSelf when true links are valid if source and target match
 		 * @return List of constructed node instances
 		 */
-		std::vector<std::shared_ptr<Node>> I2LIB_API constructNodes(const Json::Value &data, bool nodesCanLinkToSelf = false);
+		std::vector<std::shared_ptr<Node>> I2LIB_API constructNodesFromJSON(const Json::Value &data, bool nodesCanLinkToSelf = false);
 
 		/**
 		 * @brief Applies Google's PageRank formula to a list of nodes.
