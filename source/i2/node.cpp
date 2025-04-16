@@ -38,7 +38,7 @@ namespace I2
 		return this->_name;
 	}
 
-	std::map<std::shared_ptr<Node>, unsigned int> Node::getLinks(void) const noexcept
+	std::unordered_map<std::shared_ptr<Node>, unsigned int> Node::getLinks(void) const noexcept
 	{
 		return this->_link;
 	}
@@ -59,7 +59,7 @@ namespace I2
 
 		std::shared_lock<std::shared_mutex> locker(this->_lock); // Lock for reading (allow simultaneous reads, but prevent writes)
 
-		for(std::map<std::shared_ptr<Node>,unsigned int>::const_iterator itL=this->_link.cbegin(),endL=this->_link.cend();itL!=endL;++itL)
+		for(std::unordered_map<std::shared_ptr<Node>,unsigned int>::const_iterator itL=this->_link.cbegin(),endL=this->_link.cend();itL!=endL;++itL)
 			weightedDegree += itL->second; // Accumulate the weight of each node
 
 		this->_weightedDegree = weightedDegree; // Save the weighted result
@@ -82,11 +82,11 @@ namespace I2
 			std::cerr << "Attempted to add a link that pre-exists!";
 	}
 
-	void Node::addLinks(std::map<std::shared_ptr<Node>, unsigned int> link)
+	void Node::addLinks(std::unordered_map<std::shared_ptr<Node>, unsigned int> link)
 	{
 		if(this->getLinkCount())
 		{ // If there are pre-existing links then we need to check if each link pre-exists and only modify the stored weighted degree accordingly
-			for(std::map<std::shared_ptr<Node>,unsigned int>::const_iterator itL=link.cbegin(),endL=link.cend();itL!=endL;++itL)
+			for(std::unordered_map<std::shared_ptr<Node>,unsigned int>::const_iterator itL=link.cbegin(),endL=link.cend();itL!=endL;++itL)
 				this->addLink(itL->first, itL->second);
 		}
 		else 
@@ -102,7 +102,7 @@ namespace I2
 
 	void Node::removeLink(std::shared_ptr<Node> n)
 	{
-		std::map<std::shared_ptr<Node>, unsigned int>::node_type link;
+		std::unordered_map<std::shared_ptr<Node>, unsigned int>::node_type link;
 
 		if(!n) // Unable to process n if it is not valid
 			throw std::runtime_error("Error: Invalid node.");

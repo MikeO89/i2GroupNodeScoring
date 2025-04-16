@@ -167,8 +167,8 @@ TEST(i2GroupUnitTest, LinkIsRemovedSuccessfully)
     const unsigned long expectedLinkCount = 36, expectedInitWeight = 158;
 
     std::vector<std::shared_ptr<I2::Node>> nodeList;
-    std::map<std::shared_ptr<I2::Node>, unsigned int> linkMap;
-    std::map<std::shared_ptr<I2::Node>, unsigned int>::const_iterator itN;
+    std::unordered_map<std::shared_ptr<I2::Node>, unsigned int> linkMap;
+    std::unordered_map<std::shared_ptr<I2::Node>, unsigned int>::const_iterator itN;
     int nodeCount = 0;
     unsigned int linkCount = 0, expectedNewWeight = 0;
 
@@ -196,7 +196,7 @@ TEST(i2GroupUnitTest, AddingDuplicateLinkFails)
     // Test both addLink and addLinks (with one pre-existing node in the map)
     const unsigned int expectedWeight = 2, expectedLinkCount = 1;
     std::shared_ptr<I2::Node> node1 = nullptr, node2 = nullptr;
-    std::map<std::shared_ptr<I2::Node>, unsigned int> linkMap;
+    std::unordered_map<std::shared_ptr<I2::Node>, unsigned int> linkMap;
 
     node1 = std::make_shared<I2::Node>("Node1");
     node2 = std::make_shared<I2::Node>("Node2");

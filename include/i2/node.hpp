@@ -12,7 +12,7 @@
 #define I2_NODE_HPP
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <shared_mutex>
 #include "i2/directives.hpp"
@@ -29,7 +29,7 @@ namespace I2
 	class I2LIB_API Node
 	{
 	private:
-		std::map<std::shared_ptr<Node>, unsigned int> _link; // Using a heap Node pointer, controlled with shared_ptr might be slower than stack memory but it is safer when it comes to referencing
+		std::unordered_map<std::shared_ptr<Node>, unsigned int> _link; // Using a heap Node pointer, controlled with shared_ptr might be slower than stack memory but it is safer when it comes to referencing
 		mutable std::shared_mutex _lock; // To ensure thread safety
 		std::string _name;
 		unsigned int _weightedDegree; // Modified upon appending/removing a given link. More efficient to store/modify the result than to calculate each time it is needed
@@ -61,7 +61,7 @@ namespace I2
 		/**
 		 * @return All linked nodes with associated weights
 		 */
-		[[nodiscard]] std::map<std::shared_ptr<Node>, unsigned int> getLinks(void) const noexcept;
+		[[nodiscard]] std::unordered_map<std::shared_ptr<Node>, unsigned int> getLinks(void) const noexcept;
 
 		/**
 		* @brief Retrieves the pre-stored weighted degree
@@ -93,7 +93,7 @@ namespace I2
 		* @param[in] n The link to add to Node::_link
 		* @param[in] weight the weight associated to n
 		**/
-		void addLinks(std::map<std::shared_ptr<Node>, unsigned int> link);
+		void addLinks(std::unordered_map<std::shared_ptr<Node>, unsigned int> link);
 
 		/**
 		* @brief Removes the node/weight for n and updates Node::_weightedDegree, if the pair is present in Node::_link

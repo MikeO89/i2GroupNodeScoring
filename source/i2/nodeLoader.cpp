@@ -86,7 +86,7 @@ namespace I2
 			constexpr double maxDouble = std::numeric_limits<double>::max();
 
 			std::vector<std::pair<std::shared_ptr<Node>,double>> result(nodeCount);
-			std::map<std::shared_ptr<Node>,double> pageRank;
+			std::unordered_map<std::shared_ptr<Node>,double> pageRank;
             bool finishedRanking = false;
 			int index = 0;
 
@@ -98,13 +98,13 @@ namespace I2
             while(!finishedRanking)
             {
                 finishedRanking = true;
-                std::map<std::shared_ptr<Node>,double> newPageRank;
+                std::unordered_map<std::shared_ptr<Node>,double> newPageRank;
 				
                 // Iterate over each node and calculate its new PageRank
                 for(const std::shared_ptr<Node> &node : nodeList)
                 {
                     double rankSum = 0.0;
-					std::map<std::shared_ptr<Node>,unsigned int> linkList = node->getLinks();
+					std::unordered_map<std::shared_ptr<Node>,unsigned int> linkList = node->getLinks();
 
                     // Get each linked node and accumulate rank contributions
                     for(const auto &link : linkList)
@@ -141,7 +141,7 @@ namespace I2
 
 			index = 0;
 
-			for(std::map<std::shared_ptr<Node>,double>::iterator itPR=pageRank.begin(),endPR=pageRank.end();itPR!=endPR;++itPR)
+			for(std::unordered_map<std::shared_ptr<Node>,double>::iterator itPR=pageRank.begin(),endPR=pageRank.end();itPR!=endPR;++itPR)
 				result[index++] = std::make_pair(std::move(itPR->first),std::move(itPR->second)); // Move the results to the output container
 
 			return result;
