@@ -35,10 +35,12 @@ namespace I2
 			// Load the nodes without links (need all nodes to exist prior to linking)
 			for(int i=0;i<nodeCount;++i)
 			{
-				if(!data[nodeKey][i].isObject() || !data[nodeKey][i].isMember(nameKey) || !data[nodeKey][i][nameKey].isString())
+				const Json::Value &node = data[nodeKey][i];
+
+				if(!node.isObject() || !node.isMember(nameKey) || !node[nameKey].isString())
 					throw std::runtime_error("Invalid node at index '" + std::to_string(i) + "'.");
 
-				result.push_back(std::make_shared<Node>(data[nodeKey][i][nameKey].asString()));
+				result.push_back(std::make_shared<Node>(node[nameKey].asString()));
 			}
 
 			// Link the nodes
@@ -48,14 +50,16 @@ namespace I2
 			{
 				error = "Invalid link at index '" + std::to_string(i) + "'.";
 
-				if(!data[linkKey][i].isObject() || !data[linkKey][i].isMember(sourceKey)  || !data[linkKey][i].isMember(targetKey)  || !data[linkKey][i].isMember(valueKey) // Ensure the JSON structure is valid
-					|| !data[linkKey][i][sourceKey].isUInt() || !data[linkKey][i][targetKey].isUInt() || !data[linkKey][i][valueKey].isUInt()) // Ensure each member is an unsigned integer
+				const Json::Value &link = data[linkKey][i];
+
+				if(!link.isObject() || !link.isMember(sourceKey)  || !link.isMember(targetKey)  || !link.isMember(valueKey) // Ensure the JSON structure is valid
+					|| !link[sourceKey].isUInt() || !link[targetKey].isUInt() || !link[valueKey].isUInt()) // Ensure each member is an unsigned integer
 				{
 					throw std::runtime_error(error);
 				}
 
-				sourceIndex = data[linkKey][i][sourceKey].asUInt();
-				targetIndex = data[linkKey][i][targetKey].asUInt();
+				sourceIndex = link[sourceKey].asUInt();
+				targetIndex = link[targetKey].asUInt();
 
 				if((sourceIndex >= nodeCount || targetIndex >= nodeCount) // Ensure source and target indexes reference a valid node
 					|| (!nodesCanLinkToSelf && sourceIndex == targetIndex))
@@ -66,7 +70,7 @@ namespace I2
 				// Extract the referenced nodes, as well as the assigned weight
 				sourceNode = result[sourceIndex];
 				targetNode = result[targetIndex];
-				weight = data[linkKey][i][valueKey].asUInt();
+				weight = link[valueKey].asUInt();
 
 				// Add the link to both the source and the target node, together with the associated weight
 				sourceNode->addLink(targetNode,weight);
